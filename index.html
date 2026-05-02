@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elections India — Your Voice, Your Power</title>
+    <meta name="description" content="Interactive Indian Election Education Platform. Learn voter registration, EVM voting, and election results with simulated ECI data.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="blob-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <header>
+        <div class="header-container glass-panel">
+            <div class="logo">
+                <i class="ph-fill ph-flag-banner"></i>
+                <span>Elections India</span>
+            </div>
+            <nav>
+                <a href="#signin-section">Sign In</a>
+                <a href="#register-section">Register</a>
+                <a href="#guide">Guide</a>
+                <a href="#schedule-section">Schedule</a>
+                <a href="#evm">EVM</a>
+                <a href="#results-section">Results</a>
+            </nav>
+            <div class="lang-toggle" id="lang-toggle">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="hi">हिं</button>
+                <button class="lang-btn" data-lang="hin">Mix</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <h1 class="gradient-text" data-i18n="heroTitle">Your Voice,<br>Your Power.</h1>
+            <p data-i18n="heroSub">Master the Indian election process step-by-step. Let's make voting easy, informed, and interactive.</p>
+            <a href="#guide" class="btn-primary" data-i18n="heroCta">Start the Journey <i class="ph ph-arrow-right"></i></a>
+        </section>
+
+        <!-- Sign-In Section -->
+        <section id="signin-section" class="form-section">
+            <h2 class="section-title" data-i18n="signInTitle">🔐 Secure Sign-In</h2>
+            <div class="form-card glass-panel glow">
+                <div class="form-icon"><i class="ph-fill ph-fingerprint"></i></div>
+                <p class="form-desc" data-i18n="signInDesc">Enter your simulated Voter ID (EPIC) to access the platform.</p>
+                <div class="input-group">
+                    <label for="epic-input" data-i18n="epicLabel">Voter ID (EPIC Number)</label>
+                    <input type="text" id="epic-input" placeholder="e.g. ABC1234567" maxlength="10" autocomplete="off">
+                    <span class="input-hint" id="epic-hint"></span>
+                </div>
+                <div class="input-group" id="otp-group" style="display:none;">
+                    <label for="otp-input" data-i18n="otpLabel">OTP Verification</label>
+                    <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" maxlength="6" autocomplete="off">
+                    <span class="input-hint" id="otp-hint"></span>
+                </div>
+                <button class="btn-primary btn-block" id="signin-btn" data-i18n="signInBtn">Verify Voter ID</button>
+                <div id="signin-status" class="status-msg"></div>
+            </div>
+        </section>
+
+        <!-- Registration Section -->
+        <section id="register-section" class="form-section">
+            <h2 class="section-title" data-i18n="regTitle">🧾 Voter Registration</h2>
+            <!-- Age Check -->
+            <div class="form-card glass-panel glow" id="age-check-card">
+                <div class="form-icon"><i class="ph-fill ph-calendar-check"></i></div>
+                <p class="form-desc" data-i18n="ageCheckDesc">First, let's check your eligibility. Enter your date of birth.</p>
+                <div class="input-group">
+                    <label for="dob-input" data-i18n="dobLabel">Date of Birth</label>
+                    <input type="date" id="dob-input" max="2026-04-30">
+                </div>
+                <button class="btn-primary btn-block" id="check-age-btn" data-i18n="checkAgeBtn">Check Eligibility</button>
+                <div id="age-status" class="status-msg"></div>
+            </div>
+
+            <!-- Future Voter Form (hidden) -->
+            <div class="form-card glass-panel glow hidden" id="future-voter-card">
+                <div class="badge badge-future">🆕 Future Voter Apply</div>
+                <div class="form-icon"><i class="ph-fill ph-shooting-star"></i></div>
+                <p class="form-desc" data-i18n="futureDesc">Pre-register now! Your application activates when you turn 18.</p>
+                <div class="input-group">
+                    <label for="fv-name">Full Name</label>
+                    <input type="text" id="fv-name" placeholder="Enter your full name">
+                </div>
+                <div class="input-group">
+                    <label for="fv-address">Address</label>
+                    <input type="text" id="fv-address" placeholder="Your residential address">
+                </div>
+                <div class="grid-form-2">
+                    <div class="input-group">
+                        <label for="fv-mobile">Mobile Number</label>
+                        <input type="tel" id="fv-mobile" placeholder="10-digit number" maxlength="10">
+                    </div>
+                    <div class="input-group">
+                        <label for="fv-email">Email</label>
+                        <input type="email" id="fv-email" placeholder="your@email.com">
+                    </div>
+                </div>
+                <button class="btn-primary btn-block" id="fv-submit-btn">Submit Future Voter Application</button>
+                <div id="fv-status" class="status-msg"></div>
+            </div>
+
+            <!-- Full Registration Form (hidden) -->
+            <div class="form-card glass-panel glow hidden" id="full-reg-card">
+                <div class="badge badge-voter">✅ Full Voter Registration</div>
+                <div class="form-icon"><i class="ph-fill ph-identification-card"></i></div>
+                <p class="form-desc">Complete your NVSP-style voter registration (simulated).</p>
+                <div class="input-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" placeholder="Enter your full name">
+                </div>
+                <div class="grid-form-2">
+                    <div class="input-group">
+                        <label for="reg-father">Father's / Mother's Name</label>
+                        <input type="text" id="reg-father" placeholder="Parent/Guardian name">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-gender">Gender</label>
+                        <select id="reg-gender">
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="reg-address">Address</label>
+                    <input type="text" id="reg-address" placeholder="Your residential address">
+                </div>
+                <div class="grid-form-2">
+                    <div class="input-group">
+                        <label for="reg-constituency">Constituency</label>
+                        <select id="reg-constituency">
+                            <option value="">Select Constituency</option>
+                            <option value="new-delhi">New Delhi</option>
+                            <option value="mumbai-north">Mumbai North</option>
+                            <option value="chennai-south">Chennai South</option>
+                            <option value="kolkata-dakshin">Kolkata Dakshin</option>
+                            <option value="varanasi">Varanasi</option>
+                            <option value="lucknow">Lucknow</option>
+                            <option value="jaipur">Jaipur</option>
+                            <option value="hyderabad">Hyderabad</option>
+                            <option value="pune">Pune</option>
+                            <option value="ahmedabad-east">Ahmedabad East</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-mobile">Mobile Number</label>
+                        <input type="tel" id="reg-mobile" placeholder="10-digit number" maxlength="10">
+                    </div>
+                </div>
+                <button class="btn-primary btn-block" id="reg-submit-btn">Submit Registration (Form 6)</button>
+                <div id="reg-status" class="status-msg"></div>
+            </div>
+        </section>
+
+        <!-- Election Roadmap / Guide -->
+        <section id="guide" class="roadmap-section">
+            <h2 class="section-title" data-i18n="guideTitle">The Election Roadmap</h2>
+            <div class="roadmap-container">
+                <div class="timeline-line"></div>
+                <div class="roadmap-steps">
+                    <div class="step-card glass-panel active" data-step="1">
+                        <div class="step-icon"><i class="ph-fill ph-identification-card"></i></div>
+                        <h3>Phase 1</h3>
+                        <p>Voter Registration</p>
+                    </div>
+                    <div class="step-card glass-panel" data-step="2">
+                        <div class="step-icon"><i class="ph-fill ph-fingerprint"></i></div>
+                        <h3>Phase 2</h3>
+                        <p>Voting Day</p>
+                    </div>
+                    <div class="step-card glass-panel" data-step="3">
+                        <div class="step-icon"><i class="ph-fill ph-chart-bar"></i></div>
+                        <h3>Phase 3</h3>
+                        <p>Counting Results</p>
+                    </div>
+                </div>
+            </div>
+            <div id="content-display" class="content-display glass-panel glow"></div>
+        </section>
+
+        <!-- Voting Schedule Section -->
+        <section id="schedule-section" class="form-section">
+            <h2 class="section-title" data-i18n="schedTitle">📅 Voting Date & Polling Info</h2>
+            <p class="section-sub" data-i18n="schedSub">Based on simulated ECI schedule data. Select your constituency below.</p>
+            <div class="form-card glass-panel glow" style="max-width:500px;margin:0 auto 2rem;">
+                <div class="input-group">
+                    <label for="sched-constituency">Select Constituency</label>
+                    <select id="sched-constituency">
+                        <option value="">-- Choose --</option>
+                        <option value="new-delhi">New Delhi</option>
+                        <option value="mumbai-north">Mumbai North</option>
+                        <option value="chennai-south">Chennai South</option>
+                        <option value="kolkata-dakshin">Kolkata Dakshin</option>
+                        <option value="varanasi">Varanasi</option>
+                        <option value="lucknow">Lucknow</option>
+                        <option value="jaipur">Jaipur</option>
+                        <option value="hyderabad">Hyderabad</option>
+                        <option value="pune">Pune</option>
+                        <option value="ahmedabad-east">Ahmedabad East</option>
+                    </select>
+                </div>
+            </div>
+            <div id="schedule-display" class="schedule-grid hidden"></div>
+        </section>
+
+        <!-- EVM Simulator -->
+        <section id="evm" class="evm-section">
+            <h2 class="section-title" data-i18n="evmTitle">Mini EVM Simulator</h2>
+            <p class="evm-subtitle" data-i18n="evmSub">Experience how a vote is cast and recorded via VVPAT.</p>
+            <div class="evm-container glass-panel">
+                <div class="evm-machine">
+                    <div class="evm-header">Ballot Unit</div>
+                    <div class="evm-candidates">
+                        <div class="candidate-row">
+                            <span class="candidate-no">1</span>
+                            <span class="candidate-name">Candidate A</span>
+                            <div class="status-lamp" id="lamp-1"></div>
+                            <button class="vote-btn" data-id="1"></button>
+                        </div>
+                        <div class="candidate-row">
+                            <span class="candidate-no">2</span>
+                            <span class="candidate-name">Candidate B</span>
+                            <div class="status-lamp" id="lamp-2"></div>
+                            <button class="vote-btn" data-id="2"></button>
+                        </div>
+                        <div class="candidate-row">
+                            <span class="candidate-no">3</span>
+                            <span class="candidate-name">Candidate C</span>
+                            <div class="status-lamp" id="lamp-3"></div>
+                            <button class="vote-btn" data-id="3"></button>
+                        </div>
+                        <div class="candidate-row">
+                            <span class="candidate-no">4</span>
+                            <span class="candidate-name">NOTA</span>
+                            <div class="status-lamp" id="lamp-4"></div>
+                            <button class="vote-btn" data-id="4"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="vvpat-machine glass-panel">
+                    <div class="vvpat-header">VVPAT</div>
+                    <div class="vvpat-window">
+                        <div class="vvpat-glass"></div>
+                        <div id="vvpat-slip" class="vvpat-slip hidden">
+                            <h4 id="slip-name">Candidate</h4>
+                            <p>Serial: <span id="slip-no">1</span></p>
+                        </div>
+                    </div>
+                    <div class="vvpat-indicator">Green: Ready | Red: Printing</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Results Section -->
+        <section id="results-section" class="form-section">
+            <h2 class="section-title" data-i18n="resultsTitle">📊 Live Results (Simulated)</h2>
+            <p class="section-sub" data-i18n="resultsSub">Watch simulated vote counting with AI-powered insights.</p>
+            <div class="results-dashboard">
+                <div class="results-chart glass-panel glow">
+                    <div class="results-header">
+                        <h3>Vote Count — New Delhi Constituency</h3>
+                        <button class="btn-sm" id="start-counting-btn">▶ Start Counting</button>
+                    </div>
+                    <div class="chart-bars" id="chart-bars">
+                        <div class="chart-row">
+                            <span class="chart-label">Candidate A</span>
+                            <div class="chart-bar-track"><div class="chart-bar bar-a" id="bar-1" style="width:0%"></div></div>
+                            <span class="chart-val" id="val-1">0</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="chart-label">Candidate B</span>
+                            <div class="chart-bar-track"><div class="chart-bar bar-b" id="bar-2" style="width:0%"></div></div>
+                            <span class="chart-val" id="val-2">0</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="chart-label">Candidate C</span>
+                            <div class="chart-bar-track"><div class="chart-bar bar-c" id="bar-3" style="width:0%"></div></div>
+                            <span class="chart-val" id="val-3">0</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="chart-label">NOTA</span>
+                            <div class="chart-bar-track"><div class="chart-bar bar-nota" id="bar-4" style="width:0%"></div></div>
+                            <span class="chart-val" id="val-4">0</span>
+                        </div>
+                    </div>
+                    <div id="counting-status" class="counting-status"></div>
+                </div>
+                <div class="results-insight glass-panel glow" id="results-insight">
+                    <h3>🤖 AI Insight</h3>
+                    <p id="ai-result-text">Click "Start Counting" to begin the simulated vote counting process.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Post-Election Insights -->
+        <section id="insights-section" class="form-section">
+            <h2 class="section-title" data-i18n="insightsTitle">🧠 Post-Election Insights</h2>
+            <div class="insights-grid" id="insights-grid">
+                <div class="insight-card glass-panel">
+                    <div class="insight-icon turnout-icon"><i class="ph-fill ph-users-three"></i></div>
+                    <h3>Voter Turnout</h3>
+                    <div class="turnout-meter">
+                        <div class="turnout-fill" id="turnout-fill" style="width:0%"></div>
+                    </div>
+                    <p class="insight-val" id="turnout-val">—</p>
+                </div>
+                <div class="insight-card glass-panel">
+                    <div class="insight-icon winner-icon"><i class="ph-fill ph-trophy"></i></div>
+                    <h3>Winner</h3>
+                    <p class="insight-val large" id="winner-name">—</p>
+                    <p class="insight-sub" id="winner-margin">Run the results to see the winner</p>
+                </div>
+                <div class="insight-card glass-panel">
+                    <div class="insight-icon edu-icon"><i class="ph-fill ph-lightbulb"></i></div>
+                    <h3>Did You Know?</h3>
+                    <p class="insight-sub" id="edu-fact">India is the world's largest democracy with over 900 million eligible voters. The ECI uses over 1 million EVMs per general election.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="glass-panel footer-content">
+            <p>Created for Civic Education. Data based on ECI guidelines. All data is simulated.</p>
+        </div>
+    </footer>
+
+    <!-- AI Chat Widget -->
+    <div class="chat-widget-container">
+        <div id="chat-window" class="chat-window glass-panel hidden">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="ph-fill ph-robot"></i>
+                    <span>AI Election Assistant</span>
+                </div>
+                <button id="close-chat" class="icon-btn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="chat-quick-actions" id="chat-quick-actions">
+                <button class="quick-btn" data-query="How do I register?">📝 Register</button>
+                <button class="quick-btn" data-query="When is my voting date?">📅 Schedule</button>
+                <button class="quick-btn" data-query="How does EVM work?">🗳️ EVM</button>
+                <button class="quick-btn" data-query="Show results">📊 Results</button>
+                <button class="quick-btn" data-query="I am 17, can I apply?">🆕 Future Voter</button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="message ai-message ai-formatted">
+                    <p><strong>Welcome!</strong> 🇮🇳</p>
+                    <p>I'm your AI Election Assistant. I can help you with registration, voting, schedules, and results.</p>
+                    <p>Try the quick buttons above or type your question below!</p>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask me anything..." autocomplete="off">
+                <button id="send-btn" class="icon-btn primary"><i class="ph-fill ph-paper-plane-right"></i></button>
+            </div>
+        </div>
+        <button id="chat-fab" class="chat-fab">
+            <i class="ph-fill ph-chat-teardrop-dots"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
